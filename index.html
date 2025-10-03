@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link id="theme-vars" rel="stylesheet" href="./themes/light-theme.css">
+    <title>ToDo List</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="container">
+                <h1 class="header__title">Todo list</h1>
+                <div class="header__content">
+                    <form class="header__search">
+                        <label class="header__search-label" for="search"></label>
+                        <input type="text" id="search" class="header__search-input input" placeholder="Search note...">
+                    </form>
+                    <button class="header__switch-theme-btn btn" id="switch-theme-btn" title="Button to switch theme">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M11.9999 21C9.65659 20.9995 7.40584 20.0851 5.72615 18.4512C4.04647 16.8172 3.07031 14.5925 3.00519 12.2501C2.94007 9.90767 3.79113 7.63222 5.37745 5.90746C6.96376 4.1827 9.16023 3.14465 11.4999 3.014V3C11.1459 3.966 10.9999 4.911 10.9999 6C10.9999 8.38695 11.9481 10.6761 13.636 12.364C15.3238 14.0518 17.613 15 19.9999 15C20.2389 15 20.2539 15.018 20.4879 15C19.8674 16.7551 18.7178 18.2747 17.1977 19.3493C15.6775 20.4238 13.8615 21.0006 11.9999 21Z"
+                                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+        <div class="sub-content" id="sub-content">
+            <div class="container">
+                <img src="./font/main-img.png" alt="" width="221" height="174">
+                <h2 class="sub-content__title">Empty...</h2>
+            </div>
+        </div>
+
+        <main class="main">
+            <div class="task-container" id="task-list">
+            </div>
+        </main>
+
+        <div class="wrapper-btn-modal">
+            <div class="container" id="container-open-modal">
+                <button class="add-task-button btn" title="Button to create new task"></button>
+            </div>
+        </div>
+
+        <div class="modal-overlay display-none" id="modal-overlay-add-task">
+            <div class="modal display-none" id="modal-to-create-task">
+                <div class="modal-container">
+                    <div class="modal-wrapper">
+                        <h2 class="modal__title">
+                            New note
+                        </h2>
+                        <div class="modal-inner">
+                            <form class="modal__form" id="form-to-create-task">
+                                <label for="add-name-task" class="modal__form-label"></label>
+                                <input type="text" id="input-to-task-name"
+                                    class="modal__form-input create-task-name-input input"
+                                    placeholder="Input your note..." maxlength="100" required>
+                            </form>
+                            <div class="modal__task-name-rules">
+                                <p class="modal__task-name-rule">
+                                    Название задачи должно быть больше трех символов
+                                </p>
+                                <p class="modal__task-name-rule">
+                                    Название задачи не должно начинаться с пробела
+                                </p>
+                                <p class="modal__task-name-rule">
+                                    Название задачи не должно быть пустым
+                                </p>
+                            </div>
+                            <div class="modal__btns">
+                                <button class="modal__btn-cancel white-btn btn close-modal-button">
+                                    Cancel
+                                </button>
+                                <button class="modal__btn-apply btn" id="create-task-btn">
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay display-none" id="modal-overlay-delete-task">
+        <div class="modal modal-small display-none" id="modal-delete-task">
+            <h2 class="modal__title">Are you sure?</h2>
+            <div class="modal__btns">
+                <button class="modal__btn-cancel white-btn btn close-modal-btn" id="close-delete-modal">Nope
+                </button>
+
+                <button class="modal__btn-apply btn" id="delete-task-btn">
+                    Apply
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay display-none" id="modal-overlay-to-switch-theme">
+        <div class="modal modal-small display-none" id="modal-to-apply-switch-theme">
+            <h2 class="modal__title">Would you switch theme?</h2>
+            <div class="modal__btns">
+                <button class="modal__btn-cancel white-btn btn close-modal-btn" id="close-switch-theme-modal-btn">Nope
+                </button>
+
+                <button class="modal__btn-apply btn" id="switch-theme-btn-in-modal">
+                    Apply
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay display-none" id="modal-overlay-edit-task-name">
+        <div class="modal modal-small display-none" id="modal-edit-task-name">
+            <h2 class="modal__title">Would you edit task name?</h2>
+            <div class="modal__btns">
+                <button class="modal__btn-cancel white-btn btn" id="close-modal-edit-task-name-button">Nope
+                </button>
+                <button class="modal__btn-apply btn" id="edit-task-name-btn">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay display-none" id="modal-overlay-editting-task-name">
+        <div class="modal display-none" id="modal-editting-task-name">
+            <div class="modal-container">
+                <div class="modal-wrapper">
+                    <h2 class="modal__title">
+                        New task name
+                    </h2>
+                    <div class="modal-inner">
+                        <form class="modal__form" id="form-to-create-task">
+                            <label for="add-name-task" class="modal__form-label"></label>
+                            <input type="text" id="input-to-edit-task-name"
+                                class="modal__form-input input" placeholder="Input your note..."
+                                maxlength="100" required>
+                        </form>
+                        <div class="modal__task-name-rules">
+                            <p class="modal__task-name-rule">
+                                Название задачи должно быть больше трех символов
+                            </p>
+                            <p class="modal__task-name-rule">
+                                Название задачи не должно начинаться с пробела
+                            </p>
+                            <p class="modal__task-name-rule">
+                                Название задачи не должно быть пустым
+                            </p>
+                        </div>
+                        <div class="modal__btns">
+                            <button class="modal__btn-cancel white-btn btn close-modal-button">
+                                Cancel
+                            </button>
+                            <button class="modal__btn-apply btn" id="create-task-btn">
+                                Apply
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

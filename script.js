@@ -4,6 +4,14 @@ const modal = document.querySelector('.modal')
 const modalOverlayDeleteTask = document.getElementById('modal-overlay-delete-task')
 const deleteTaskModal = document.getElementById('modal-delete-task')
 
+const searchInput = document.getElementById('search')
+
+searchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault()
+    }
+})
+
 const modalToSwitchTheme = document.getElementById('modal-to-apply-switch-theme')
 const modalOverlayToSwitchTheme = document.getElementById('modal-overlay-to-switch-theme')
 const closeModalThemeButton = document.getElementById('close-switch-theme-modal-btn')
@@ -133,6 +141,8 @@ const validateInput = (input, rules, rulesArray) => {
 
     if (allRulesValid) {
         taskName = inputValue
+    } else {
+        taskName = ''
     }
 }
 
@@ -154,11 +164,23 @@ inputToTaskName.addEventListener('input', () => {
     validateInput(inputToTaskName, taskRulesNameCreate, checkTaskRulesName)
 })
 
+inputToTaskName.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+        validateInput(inputToTaskName, taskRulesNameCreate, checkTaskRulesName)
+        if (!taskName) {
+            event.preventDefault()
+            return
+        }
+        createTask()
+        event.preventDefault()
+    }
+})
+
 let taskToEdit = null
 
 const tasksContainer = document.getElementById('task-list')
 
-applyButton.addEventListener('click', () => {
+function createTask() {
     if (!taskName) {
         return
     }
@@ -213,6 +235,10 @@ applyButton.addEventListener('click', () => {
     positionModalButton()
 
     console.log(`Номер задачи: ${taskId}`)
+}
+
+applyButton.addEventListener('click', () => {
+    createTask()
 })
 
 const modalOverlayEditTaskName = document.getElementById('modal-overlay-edit-task-name')
@@ -247,6 +273,18 @@ inputToEditTaskName.addEventListener('input', () => {
     validateInput(inputToEditTaskName, taskRulesNameEdit, checkEditNameRules)
 })
 
+inputToEditTaskName.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        validateInput(inputToEditTaskName, taskRulesNameEdit, checkEditNameRules)
+        if (!taskName) {
+            event.preventDefault()
+            return
+        }
+        editTaskName()
+        event.preventDefault()
+    }
+})
+
 applyEditTaskNameModal.addEventListener('click', () => {
     closeModal(modalEditTaskName, modalOverlayEditTaskName)
     openModal(modalEdittingTaskName, overlayModalEdittingTaskName)
@@ -257,7 +295,7 @@ closeModalEdittingTaskNameButton.addEventListener('click', () => {
     closeModal(modalEdittingTaskName, overlayModalEdittingTaskName)
 })
 
-applyModalEdittingTaskNameButton.addEventListener('click', () => {
+function editTaskName() {
     if (!taskName) {
         return
     }
@@ -272,6 +310,10 @@ applyModalEdittingTaskNameButton.addEventListener('click', () => {
     closeModal(modalEdittingTaskName, overlayModalEdittingTaskName)
     clearTaskName(inputToEditTaskName)
     clearInput(taskRulesNameEdit)
+}
+
+applyModalEdittingTaskNameButton.addEventListener('click', () => {
+    editTaskName()
 })
 
 const deleteTaskButtonInModal = document.getElementById("delete-task-btn")

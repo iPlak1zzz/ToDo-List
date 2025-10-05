@@ -81,8 +81,6 @@ const emptyMain = document.getElementById('sub-content')
 
 const createTaskForm = document.getElementById('form-to-create-task')
 
-const errorInput = document.getElementById('input-to-task-name')
-
 const taskRulesNameCreate = document.querySelectorAll('#modal-to-create-task .modal__task-name-rule')
 const inputToTaskName = document.getElementById('input-to-task-name')
 let taskName = ''
@@ -103,9 +101,8 @@ window.onload = function () {
 const checkTaskRulesName = [
     (value) => value.trim().length > 3,
     (value) => !value.startsWith(" "),
-    (value) => value.trim().length > 0
+    (value) => value.trim().length > 0,
 ]
-
 
 /* Я пишу код, и понимаю, что тут как бы ну что-то типо КАШИ получается, поэтому я оставил тут свой комментарий на случай того, что если кому-то будет что-то не понятно конкретно на этом моменте :>
 
@@ -149,6 +146,7 @@ const clearInput = (taskRule) => {
 }
 
 const clearTaskName = (taskNameValue) => {
+    taskNameValue.value = ''
     taskName = ''
 }
 
@@ -156,7 +154,7 @@ inputToTaskName.addEventListener('input', () => {
     validateInput(inputToTaskName, taskRulesNameCreate, checkTaskRulesName)
 })
 
-
+let taskToEdit = null
 
 const tasksContainer = document.getElementById('task-list')
 
@@ -207,9 +205,11 @@ applyButton.addEventListener('click', () => {
     emptyMain.classList.add('sub-content-not-aviable')
 
 
+    taskToEdit = task
+
     applyButtonCloseModal()
     clearInput(taskRulesNameCreate)
-    clearTaskName()
+    clearTaskName(inputToTaskName)
     positionModalButton()
 
     console.log(`Номер задачи: ${taskId}`)
@@ -222,8 +222,15 @@ const applyEditTaskNameModal = document.getElementById('edit-task-name-btn')
 
 const overlayModalEdittingTaskName = document.getElementById('modal-overlay-editting-task-name')
 const modalEdittingTaskName = document.getElementById('modal-editting-task-name')
-const taskRulesNameEdit = document.querySelectorAll('#modal-to-create-task .modal__task-name-rule')
+const taskRulesNameEdit = document.querySelectorAll('#modal-editting-task-name .modal__task-edit-name-rule')
 const inputToEditTaskName = document.getElementById('input-to-edit-task-name')
+const checkEditNameRules = [
+    (value) => value.trim().length > 3,
+    (value) => !value.startsWith(" "),
+    (value) => value.trim().length > 0
+]
+const closeModalEdittingTaskNameButton = document.getElementById('close-modal-editting-task-name-btn')
+const applyModalEdittingTaskNameButton = document.getElementById('apply-modal-editting-task-name-btn')
 
 tasksContainer.addEventListener('click', editingName => {
     const editTaskNameBtn = editingName.target.closest('.task__edit-name-btn')
@@ -237,17 +244,35 @@ closeEditTaskNameModal.addEventListener('click', () => {
 })
 
 inputToEditTaskName.addEventListener('input', () => {
-    validateInput(inputToEditTaskName, taskRulesNameCreate, checkTaskRulesName)
-    console.log('бляяяя')
+    validateInput(inputToEditTaskName, taskRulesNameEdit, checkEditNameRules)
 })
 
 applyEditTaskNameModal.addEventListener('click', () => {
     closeModal(modalEditTaskName, modalOverlayEditTaskName)
     openModal(modalEdittingTaskName, overlayModalEdittingTaskName)
-    validateInput(inputToEditTaskName, taskRulesNameCreate, checkTaskRulesName)
-    console.log('ну')
+    validateInput(inputToEditTaskName, taskRulesNameEdit, checkEditNameRules)
 })
 
+closeModalEdittingTaskNameButton.addEventListener('click', () => {
+    closeModal(modalEdittingTaskName, overlayModalEdittingTaskName)
+})
+
+applyModalEdittingTaskNameButton.addEventListener('click', () => {
+    if (!taskName) {
+        return
+    }
+
+    validateInput(inputToEditTaskName, taskRulesNameEdit, checkEditNameRules)
+
+    const edittingTaskName = taskToEdit.querySelector('.task__title')
+
+    edittingTaskName.textContent = taskName
+    console.log(taskName)
+
+    closeModal(modalEdittingTaskName, overlayModalEdittingTaskName)
+    clearTaskName(inputToEditTaskName)
+    clearInput(taskRulesNameEdit)
+})
 
 const deleteTaskButtonInModal = document.getElementById("delete-task-btn")
 const deleteTaskButtonCloseModal = document.getElementById('close-delete-modal')

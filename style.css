@@ -548,6 +548,9 @@ article>*+* {
 /* #modal-edit-task-name {} */
 
 @media (max-width: 766px) {
+    body {
+        min-height: 100vh;
+    }
     .header__content {
         max-width: 550px;
     }

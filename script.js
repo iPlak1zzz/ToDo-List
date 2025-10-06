@@ -262,6 +262,7 @@ tasksContainer.addEventListener('click', editingName => {
     const editTaskNameBtn = editingName.target.closest('.task__edit-name-btn')
 
     if (!editTaskNameBtn) return
+    taskToEdit = editingName.target.closest('.task')
     openModal(modalEditTaskName, modalOverlayEditTaskName)
 })
 

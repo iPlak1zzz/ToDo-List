@@ -348,3 +348,86 @@ tasksContainer.addEventListener('click', deletingTask => {
         })
     }
 })
+
+
+/**! Дропдовн меню */
+
+const dropdownButton = document.getElementById('header-dropdown-btn')
+const headerDropdownMenu = document.getElementById('header-dropdown-menu')
+const dropdownIcon = document.getElementById('dropdown-icon')
+
+const headerDropdownItemsArray = document.querySelectorAll('.header__dropdown-item')
+
+const checkDropdownValue = (dropdownButton, dropdownValues) => {
+    dropdownValues.forEach((value) => {
+        value.addEventListener('click', () => {
+            dropdownButton.innerText = value.dataset.value
+        })
+    })
+}
+
+const openDropdownMenu = (dropDownMenu, dropdownIcon) => {
+    dropDownMenu.classList.remove('display-none')
+    dropDownMenu.classList.add('shadow')
+    dropDownMenu.classList.add('display-flex')
+    dropdownIcon.classList.add('chevron-rotate')
+}
+
+const closeDropdownMenu = (dropDownMenu, dropdownIcon) => {
+    dropDownMenu.classList.add('display-none')
+    dropdownIcon.classList.remove('chevron-rotate')
+    dropDownMenu.classList.remove('shadow')
+    dropDownMenu.classList.remove('display-flex')
+}
+
+
+
+dropdownButton.addEventListener('click', () => {
+    if (headerDropdownMenu.classList.contains('display-none')) {
+        openDropdownMenu(headerDropdownMenu, dropdownIcon)
+    } else {
+        closeDropdownMenu(headerDropdownMenu, dropdownIcon)
+    }
+
+    checkDropdownValue(dropdownButton, headerDropdownItemsArray)
+})
+
+window.addEventListener('load', () => {
+    window.addEventListener('mouseup', (event) => {
+        if (!event.target.closest('#header-dropdown-btn')) {
+            closeDropdownMenu(headerDropdownMenu, dropdownIcon)
+        }
+    })
+})
+
+
+
+// const validateInput = (input, rules, rulesArray) => {
+//     const inputValue = input.value
+//     let allRulesValid = true
+
+//     rules.forEach((rule, index) => {
+//         const checkFn = rulesArray[index]
+
+//         if (!checkFn) return
+
+//         const isValid = checkFn(inputValue)
+
+//         if (!isValid) {
+//             allRulesValid = false
+//         }
+
+//         rule.classList.toggle('rule-valid', isValid)
+//         rule.classList.toggle('rule-invalid', !isValid)
+
+//         if (inputValue === '') {
+//             rule.classList.remove('rule-valid', 'rule-invalid')
+//         }
+//     })
+
+//     if (allRulesValid) {
+//         taskName = inputValue
+//     } else {
+//         taskName = ''
+//     }
+// }

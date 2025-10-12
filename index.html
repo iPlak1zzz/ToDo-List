@@ -13,10 +13,6 @@
             <div class="container">
                 <h1 class="header__title">Todo list</h1>
                 <div class="header__content">
-                    <form class="header__search">
-                        <label class="header__search-label" for="search"></label>
-                        <input type="text" id="search" class="header__search-input input" placeholder="Search note...">
-                    </form>
                     <button class="header__switch-theme-btn btn" id="switch-theme-btn" title="Button to switch theme">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -24,8 +20,32 @@
                                 stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </button>
+                    <form class="header__search">
+                        <label class="header__search-label" for="search"></label>
+                        <input type="text" id="search" class="header__search-input input" placeholder="Search note...">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.146 15.3707 4.888 14.112C3.63 12.8533 3.00067 11.316 3 9.5C2.99933 7.684 3.62867 6.14667 4.888 4.888C6.14733 3.62933 7.68467 3 9.5 3C11.3153 3 12.853 3.62933 14.113 4.888C15.373 6.14667 16.002 7.684 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8127 13.5627 12.688 12.688C13.5633 11.8133 14.0007 10.7507 14 9.5C13.9993 8.24933 13.562 7.187 12.688 6.313C11.814 5.439 10.7513 5.00133 9.5 5C8.24867 4.99867 7.18633 5.43633 6.313 6.313C5.43967 7.18967 5.002 8.252 5 9.5C4.998 10.748 5.43567 11.8107 6.313 12.688C7.19033 13.5653 8.25267 14.0027 9.5 14Z"
+                                fill="#6c63ff" />
+                        </svg>
+                    </form>
+                    <div class="header__select">
+                        <button class="header__dropdown-btn" id="header-dropdown-btn">All</button>
+                        <svg class="header__select-chevron" id="dropdown-icon" width="13" height="13" viewBox="0 0 9 5"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.36923 4L1 1" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M7.73846 1L4.36923 4" stroke="white" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <div class="header__dropdown display-none" id="header-dropdown-menu">
+                            <button class="header__dropdown-item" data-value="All">All</button>
+                            <button class="header__dropdown-item" data-value="Complete">Complete</button>
+                            <button class="header__dropdown-item" data-value="Incomplete">Incomplete</button>
+                        </div>
+                    </div>
+
+
                 </div>
-            </div>
         </header>
         <div class="sub-content" id="sub-content">
             <div class="container">
@@ -134,9 +154,8 @@
                     <div class="modal-inner">
                         <form class="modal__form" id="form-to-create-task">
                             <label for="add-name-task" class="modal__form-label"></label>
-                            <input type="text" id="input-to-edit-task-name"
-                                class="modal__form-input input" placeholder="Input your note..."
-                                maxlength="100" required>
+                            <input type="text" id="input-to-edit-task-name" class="modal__form-input input"
+                                placeholder="Input your note..." maxlength="100" required>
                         </form>
                         <div class="modal__task-name-rules">
                             <p class="modal__task-name-rule modal__task-edit-name-rule">
@@ -150,7 +169,8 @@
                             </p>
                         </div>
                         <div class="modal__btns">
-                            <button class="modal__btn-cancel white-btn btn close-modal-button" id="close-modal-editting-task-name-btn">
+                            <button class="modal__btn-cancel white-btn btn close-modal-button"
+                                id="close-modal-editting-task-name-btn">
                                 Cancel
                             </button>
                             <button class="modal__btn-apply btn" id="apply-modal-editting-task-name-btn">

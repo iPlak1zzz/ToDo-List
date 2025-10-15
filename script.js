@@ -87,6 +87,14 @@ closeModalButton.addEventListener('click', closeModaLWindow)
 
 const emptyMain = document.getElementById('sub-content')
 
+const showEmptyMain = () => {
+    emptyMain.classList.add('sub-content-not-aviable')
+}
+
+const hideEmptyMain = () => {
+    emptyMain.classList.remove('sub-content-not-aviable')
+}
+
 const createTaskForm = document.getElementById('form-to-create-task')
 
 const taskRulesNameCreate = document.querySelectorAll('#modal-to-create-task .modal__task-name-rule')
@@ -303,6 +311,8 @@ const filterTask = (selectedValue) => {
     const allTasks = tasksContainer.querySelectorAll('.task')
     const value = selectedValue.toLowerCase()
 
+    let visibleTasks = 0
+
     allTasks.forEach(task => {
         task.classList.remove('display-none')
 
@@ -311,7 +321,18 @@ const filterTask = (selectedValue) => {
         } else if (value === 'incomplete' && !task.classList.contains('task--incomplete')) {
             task.classList.add('display-none')
         }
+
+        if (task.classList.contains('display-none')) {
+            visibleTasks++
+        }
     })
+
+    if (visibleTasks === 0) {
+        showEmptyMain()
+    } else {
+        hideEmptyMain()
+    }
+
 }
 
 dropdownItems.forEach(item => {

@@ -88,11 +88,11 @@ closeModalButton.addEventListener('click', closeModaLWindow)
 const emptyMain = document.getElementById('sub-content')
 
 const showEmptyMain = () => {
-    emptyMain.classList.add('sub-content-not-aviable')
+    emptyMain.classList.remove('sub-content-not-aviable')
 }
 
 const hideEmptyMain = () => {
-    emptyMain.classList.remove('sub-content-not-aviable')
+    emptyMain.classList.add('sub-content-not-aviable')
 }
 
 const createTaskForm = document.getElementById('form-to-create-task')
@@ -311,8 +311,6 @@ const filterTask = (selectedValue) => {
     const allTasks = tasksContainer.querySelectorAll('.task')
     const value = selectedValue.toLowerCase()
 
-    let visibleTasks = 0
-
     allTasks.forEach(task => {
         task.classList.remove('display-none')
 
@@ -321,18 +319,15 @@ const filterTask = (selectedValue) => {
         } else if (value === 'incomplete' && !task.classList.contains('task--incomplete')) {
             task.classList.add('display-none')
         }
-
-        if (task.classList.contains('display-none')) {
-            visibleTasks++
-        }
     })
 
-    if (visibleTasks === 0) {
+    const visibleTasks = [...allTasks].filter(task => !task.classList.contains('display-none'))
+
+    if (visibleTasks.length === 0) {
         showEmptyMain()
     } else {
         hideEmptyMain()
     }
-
 }
 
 dropdownItems.forEach(item => {
@@ -342,36 +337,6 @@ dropdownItems.forEach(item => {
         filterTask(selectedValue)
     })
 })
-
-// const filterTask = (container) => {
-//     const filterValue = dropdownButton.innerText.toLocaleLowerCase()
-//     console.log(filterValue)
-//     const allTasks = container.querySelectorAll('.task')
-//     console.log(allTasks)
-//     allTasks.forEach((task) => {
-//         if (filterValue === 'complete') {
-//             if (task.classList.contains('task--incomplete')) {
-//                 task.classList.add('display-none')
-//             }
-//         } else if (filterValue === 'incomplete') {
-//             if (task.classList.contains('task--complete')) {
-//                 task.classList.add('display-none')
-//             }
-//         } else {
-//             task.classList.remove('display-none')
-//         }
-//     })
-// }
-
-// const checkDropdownValue = (dropdownButton, dropdownValues) => {
-//     dropdownValues.forEach((value) => {
-//         value.addEventListener('click', () => {
-//             dropdownButton.innerText = value.dataset.value
-//             filterTask(tasksContainer)
-//         })
-//     })
-//     console.log('task')
-// }
 
 /** Логика фильтрации задач */
 

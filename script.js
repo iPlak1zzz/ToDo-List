@@ -256,6 +256,8 @@ function createTask() {
     clearTaskName(inputToTaskName)
     positionModalButton()
 
+    document.dispatchEvent(new CustomEvent('taskCreated'))
+
     console.log(`Номер задачи: ${taskId}`)
 }
 
@@ -268,8 +270,6 @@ applyButton.addEventListener('click', () => {
 const dropdownButton = document.getElementById('header-dropdown-btn')
 const headerDropdownMenu = document.getElementById('header-dropdown-menu')
 const dropdownIcon = document.getElementById('dropdown-icon')
-
-const headerDropdownItemsArray = document.querySelectorAll('.header__dropdown-item')
 
 const openDropdownMenu = (dropDownMenu, dropdownIcon) => {
     dropDownMenu.classList.remove('display-none')
@@ -295,6 +295,8 @@ dropdownButton.addEventListener('click', () => {
     }
 })
 
+
+
 window.addEventListener('load', () => {
     window.addEventListener('mouseup', (event) => {
         if (!event.target.closest('#header-dropdown-btn')) {
@@ -318,6 +320,8 @@ const filterTask = (selectedValue) => {
             task.classList.add('display-none')
         } else if (value === 'incomplete' && !task.classList.contains('task--incomplete')) {
             task.classList.add('display-none')
+        } else if (value === 'all') {
+            task.classList.remove('display-none')
         }
     })
 
@@ -330,6 +334,16 @@ const filterTask = (selectedValue) => {
     }
 }
 
+document.addEventListener('taskCreated', () => {
+    const currentFilter = dropdownButton.innerText.toLowerCase()
+
+    if (currentFilter !== 'all') {
+        dropdownButton.innerText = 'All'
+        filterTask('all')
+        console.log('ыыыыыыыы')
+    }
+})
+
 dropdownItems.forEach(item => {
     item.addEventListener('click', () => {
         const selectedValue = item.dataset.value
@@ -338,7 +352,19 @@ dropdownItems.forEach(item => {
     })
 })
 
+
+
 /** Логика фильтрации задач */
+
+/** Логика отображения всех задач, если пользователь при фильтрации создает еще одну задачу задач */
+
+// const showAllTask = () => {
+//     if (!dropdownButton.innerText.toLowerCase() === 'all') {
+//         task.
+//     }
+// }
+
+/** Логика отображения всех задач, если пользователь при фильтрации создает еще одну задачу задач */
 
 const modalOverlayEditTaskName = document.getElementById('modal-overlay-edit-task-name')
 const modalEditTaskName = document.getElementById('modal-edit-task-name')
@@ -357,11 +383,11 @@ const checkEditNameRules = [
 const closeModalEdittingTaskNameButton = document.getElementById('close-modal-editting-task-name-btn')
 const applyModalEdittingTaskNameButton = document.getElementById('apply-modal-editting-task-name-btn')
 
-tasksContainer.addEventListener('click', editingName => {
-    const editTaskNameBtn = editingName.target.closest('.task__edit-name-btn')
+tasksContainer.addEventListener('click', edittingName => {
+    const editTaskNameBtn = edittingName.target.closest('.task__edit-name-btn')
 
     if (!editTaskNameBtn) return
-    taskToEdit = editingName.target.closest('.task')
+    taskToEdit = edittingName.target.closest('.task')
     openModal(modalEditTaskName, modalOverlayEditTaskName)
 })
 

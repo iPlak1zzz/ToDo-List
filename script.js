@@ -340,7 +340,6 @@ document.addEventListener('taskCreated', () => {
     if (currentFilter !== 'all') {
         dropdownButton.innerText = 'All'
         filterTask('all')
-        console.log('ыыыыыыыы')
     }
 })
 
@@ -352,19 +351,8 @@ dropdownItems.forEach(item => {
     })
 })
 
-
-
 /** Логика фильтрации задач */
 
-/** Логика отображения всех задач, если пользователь при фильтрации создает еще одну задачу задач */
-
-// const showAllTask = () => {
-//     if (!dropdownButton.innerText.toLowerCase() === 'all') {
-//         task.
-//     }
-// }
-
-/** Логика отображения всех задач, если пользователь при фильтрации создает еще одну задачу задач */
 
 const modalOverlayEditTaskName = document.getElementById('modal-overlay-edit-task-name')
 const modalEditTaskName = document.getElementById('modal-edit-task-name')
@@ -471,5 +459,41 @@ tasksContainer.addEventListener('click', deletingTask => {
                 emptyMain.classList.remove('sub-content-not-aviable')
             }
         })
+    }
+})
+
+const allTasks = tasksContainer.querySelector('.task')
+
+searchInput.addEventListener('input', () => {
+    const currentFilterInSearch = dropdownButton.innerText.toLowerCase()
+    const searchInputValue = searchInput.value.trim().toLowerCase()
+    let visibleCount = 0
+
+    const allTasks = tasksContainer.querySelectorAll('.task')
+    allTasks.forEach(task => {
+        const taskTitle = task.querySelector('.task__title').innerText.trim().toLowerCase()
+
+        const matchesSearch = (searchInputValue === '') ? true : taskTitle.includes(searchInputValue)
+        let matchesFilter = true
+
+        if (currentFilterInSearch === 'complete') {
+            matchesFilter = task.classList.contains('task--complete')
+        } else if (currentFilterInSearch === 'incomplete') {
+            matchesFilter = task.classList.contains('task--incomplete')
+        }
+        const shouldShow = matchesSearch && matchesFilter
+
+        if (shouldShow) {
+            task.classList.remove('display-none')
+            visibleCount++
+        } else {
+            task.classList.add('display-none')
+        }
+    })
+
+    if (visibleCount === 0) {
+        showEmptyMain()
+    } else {
+        hideEmptyMain()
     }
 })

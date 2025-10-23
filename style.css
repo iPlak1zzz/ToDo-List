@@ -117,6 +117,7 @@ article>*+* {
 
     height: 38px;
     padding-inline: 10px;
+    padding-right: 40px;
     font-size: 16px;
     color: var(--purple);
     background-color: var(--bg-color);
@@ -477,6 +478,10 @@ article>*+* {
     justify-content: space-between;
     height: 250px;
     row-gap: 15px;
+}
+
+.hidden {
+    display: none;
 }
 
 .display-none {

@@ -18,7 +18,6 @@ const closeModalThemeButton = document.getElementById('close-switch-theme-modal-
 const switchThemeButtonInModal = document.getElementById('switch-theme-btn-in-modal')
 const themeToggleButton = document.getElementById('switch-theme-btn')
 const themeLink = document.getElementById('theme-vars')
-console.log(themeLink.getAttribute('href'))
 
 themeToggleButton.addEventListener('click', () => {
     openModal(modalToSwitchTheme, modalOverlayToSwitchTheme)
@@ -106,7 +105,6 @@ const positionModalButton = () => {
         containerOpenModal.style.marginTop = "50px"
     } else {
         containerOpenModal.style.marginTop = "80px"
-        console.log('Работает')
     }
 }
 
@@ -257,8 +255,6 @@ function createTask() {
     positionModalButton()
 
     document.dispatchEvent(new CustomEvent('taskCreated'))
-
-    console.log(`Номер задачи: ${taskId}`)
 }
 
 applyButton.addEventListener('click', () => {
@@ -419,7 +415,6 @@ function editTaskName() {
     const edittingTaskName = taskToEdit.querySelector('.task__title')
 
     edittingTaskName.textContent = taskName
-    console.log(taskName)
 
     closeModal(modalEdittingTaskName, overlayModalEdittingTaskName)
     clearTaskName(inputToEditTaskName)

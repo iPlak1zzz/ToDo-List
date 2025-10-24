@@ -653,6 +653,10 @@ article>*+* {
         min-height: 100vh;
     }
 
+    .wrapper {
+        margin-block: 0;
+    }
+
     .header__content {
         max-width: 550px;
     }
@@ -665,12 +669,7 @@ article>*+* {
     .add-task-button {
         margin-right: 30px;
     }
-}
 
-@media (max-width: 766px) {
-    .wrapper {
-        margin-block: 70px;
-    }
 
     .modal-overlay {
         padding-inline: 10px;
